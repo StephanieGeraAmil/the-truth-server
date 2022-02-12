@@ -44,6 +44,9 @@ router.delete('/users/:id',usersController.delete);
 
 /* Advance Router */
 router.post('/verses/add_sk', versesController.addSk);
+router.post('/users/add_with_decks', usersController.addWithDecks);
+router.post('/decks/add_notes', decksController.addNotes);
+router.post('/decks/add_verses', decksController.addVerses);
 
 
 

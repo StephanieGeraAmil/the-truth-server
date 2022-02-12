@@ -146,7 +146,24 @@ exports.delete = async (req, res) => {
   
 };
 
-// exports.addSk=async(req,res)=>{
+
+
+
+  // addWithStudents(req, res) {
+  //   return Classroom
+  //     .create({
+  //       class_name: req.body.class_name,
+  //       students: req.body.students,
+  //     }, {
+  //     	include: [{
+  //         model: Student,
+  //         as: 'students'
+  //       }]
+  //     })
+  //     .then((classroom) => res.status(201).send(classroom))
+  //     .catch((error) => res.status(400).send(error));
+  // },
+// exports.addDeck=async(req,res)=>{
 
 //   //the body will contain the verse id and the search key id
 //       // Validate request
