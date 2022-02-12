@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         as: 'search_keys',
         foreignKey: 'verse_id'
       });
-      Verse.belongsToMany(models.Decks, {
-        through: 'DeckVerses',
+      Verse.belongsToMany(models.Deck, {
+        through: 'DecksVerses',
         as: 'decks',
         foreignKey: 'verse_id'
       });

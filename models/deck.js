@@ -11,6 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+        Deck.belongsToMany(models.Verse, {
+        through: 'DecksVerses',
+        as: 'verses',
+        foreignKey: 'deck_id'
+      });
+        Deck.belongsToMany(models.Notes, {
+        through: 'NotesVerses',
+        as: 'notes',
+        foreignKey: 'deck_id'
+      });
+
+         Deck.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'users'
+      });
     }
   }
   Deck.init({
