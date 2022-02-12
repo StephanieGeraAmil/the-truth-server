@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv  = require('dotenv');
-const routerVerses = require('./routes/verses.js');
+// const routerVerses = require('./routes/verses.js');
+const router = require('./routes');
 const cors = require('cors');
 
 
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 
-app.use('/verses', routerVerses);
+// app.use('/verses', routerVerses);
+app.use('/', router);
 app.get('/',(req,res)=>{ res.send('Hello to the Truth Aplication')});
 
 const PORT = process.env.PORT;

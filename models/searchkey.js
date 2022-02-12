@@ -1,8 +1,9 @@
 'use strict';
-const {Model} = require('sequelize');
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Verse extends Model {
+  class SearchKey extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,21 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Verse.belongsToMany(models.SearchKey, {
+      SearchKey.belongsToMany(models.Verse, {
         through: 'SearchKeyVerses',
-        as: 'search_keys',
-        foreignKey: 'verse_id'
+        as: 'verses',
+        foreignKey: 'searched_key_id'
       });
     }
   }
-  Verse.init({
-    book: DataTypes.STRING,
-    chapter: DataTypes.DECIMAL,
-    number: DataTypes.DECIMAL,
-    
+  SearchKey.init({
+    searched_key: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Verse',
+    modelName: 'SearchKey',
   });
-  return Verse;
+  return SearchKey;
 };

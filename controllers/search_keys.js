@@ -1,7 +1,7 @@
 const db = require("../models");
-const Verse = db.Verse;
+const SearchKeys = db.SearchKeys;
 const Op = db.Sequelize.Op;
-// Create and Save a new Verse
+// Create and Save a new SearchKey
 exports.create = (req, res) => {
              // Validate request
    
@@ -13,63 +13,63 @@ exports.create = (req, res) => {
                 }
                
 
-            // Create a Verse
-                const verse = {
+            // Create a SearchKey
+                const sk = {
                     book: req.body.book,
                     chapter: req.body.chapter,
                     number: req.body.number
                 };
                 
 
-                // Save Verse in the database
-                Verse.create(verse)
+                // Save SearchKey in the database
+                SearchKeys.create(sk)
                     .then(data => {
                     res.send(data);
                     })
                     .catch(err => {
                     res.status(500).send({
                         message:
-                        err.message || "Some error occurred while creating the Verse."
+                        err.message || "Some error occurred while creating the SearchKeys."
                          });
                     });
             
 
   
 };
-// Retrieve all Verses from the database.
+// Retrieve all SearchKey from the database.
 exports.findAll = async (req, res) => {
   try{
     
-      const data = await Verse.findAll();
+      const data = await SearchKeys.findAll();
       res.send(data);
     }catch(err) {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving verses."
+          err.message || "Some error occurred while retrieving SearchKeys."
       });
     };
 };
   
 
-// Find a single Verse with an id
+// Find a single SearchKey with an id
 exports.findById = async (req, res) => {
 
 
       const id = req.params.id;
       try{
-          const data= await Verse.findByPk(id)
+          const data= await SearchKeys.findByPk(id)
             
           if (data) {
             res.send(data);
           } else {
             res.status(404).send({
-              message: `Cannot find Verse with id=${id}.`
+              message: `Cannot find SearchKeys with id=${id}.`
             });
           }
         
       }catch(err) {
         res.status(500).send({
-          message: "Error retrieving Verse with id=" + id
+          message: "Error retrieving SearchKeys with id=" + id
         });
       };
 
@@ -77,7 +77,7 @@ exports.findById = async (req, res) => {
 
   
 };
-// Update a Verse by the id in the request
+// Update a SearchKey by the id in the request
 exports.update = async (req, res) => {
        if (req.body==undefined) {
                     res.status(409).send({
@@ -87,45 +87,45 @@ exports.update = async (req, res) => {
                 }
       const id = req.params.id;
       try{
-                const num = await Verse.update(req.body,{where: { id: id }})
+                const num = await SearchKeys.update(req.body,{where: { id: id }})
                   
                 if (num == 1) {
                   res.status(204).send({
-                    message: "Verse was updated successfully!"
+                    message: "SearchKeys was updated successfully!"
                   });
                 } else {
                   res.status(409).send({
-                    message: `Cannot update Verse with id=${id}. Maybe Verse was not found!`
+                    message: `Cannot update SearchKeys with id=${id}. Maybe SearchKeys was not found!`
                   });
                 }
           }
           catch(err){
             res.status(500).send({
-              message: "Could not update Verse with id=" + id
+              message: "Could not update SearchKeys with id=" + id
             });
           };
     
 };
-// Delete a Verse with the specified id in the request
+// Delete a SearchKey with the specified id in the request
 exports.delete = async (req, res) => {
 
   const id = req.params.id;
   try{
-          const num = await Verse.destroy({where: { id: id }})
+          const num = await SearchKeys.destroy({where: { id: id }})
             
           if (num == 1) {
             res.send({
-              message: "Verse was deleted successfully!"
+              message: "SearchKeys was deleted successfully!"
             });
           } else {
             res.send({
-              message: `Cannot delete Verse with id=${id}. Maybe Verse was not found!`
+              message: `Cannot delete SearchKeys with id=${id}. Maybe SearchKeys was not found!`
             });
           }
     }
     catch(err){
       res.status(500).send({
-        message: "Could not delete Verse with id=" + id
+        message: "Could not delete SearchKeys with id=" + id
       });
     };
 
