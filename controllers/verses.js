@@ -44,7 +44,19 @@ exports.create = (req, res) => {
 exports.findAll = async (req, res) => {
   try{
     
-      const data = await Verse.findAll();
+      const data = await Verse.findAll(
+                    {
+                            include: [{
+                              model: SearchKeys,
+                              as: 'search_keys'
+                            }],
+                            order: [
+                              ['book', 'DESC'],
+                              [{model: SearchKeys,as: 'search_keys'}, 'createdAt', 'DESC'],
+                            ],
+                          }
+
+      );
       res.send(data);
     }catch(err) {
       res.status(500).send({
