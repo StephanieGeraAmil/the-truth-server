@@ -1,5 +1,6 @@
 const db = require("../models");
-const SearchKeys = db.SearchKeys;
+
+const SearchKeys = db.SearchKey;
 const Op = db.Sequelize.Op;
 // Create and Save a new SearchKey
 exports.create = (req, res) => {
@@ -15,9 +16,8 @@ exports.create = (req, res) => {
 
             // Create a SearchKey
                 const sk = {
-                    book: req.body.book,
-                    chapter: req.body.chapter,
-                    number: req.body.number
+                    searched_key: req.body.searched_key
+                  
                 };
                 
 

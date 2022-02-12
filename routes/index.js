@@ -18,7 +18,8 @@ router.post('/sk', searchKeysController.create);
 router.patch('/sk/:id', searchKeysController.update);
 router.delete('/sk/:id',searchKeysController.delete);
 
-
+/* Advance Router */
+router.post('/verses/add_sk', versesController.addSk);
 
 
 
