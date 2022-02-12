@@ -1,10 +1,10 @@
 const express = require('express');
-const controllers=require('../controllers');
-const versesController=controllers.verses;
-const searchKeysController=controllers.search_keys;
-const notesController=controllers.notes;
-const decksController=controllers.decks;
-const usersController=controllers.users;
+const controllers= require('../controllers');
+const versesController= controllers.verses;
+const searchKeysController= controllers.search_keys;
+const notesController= controllers.notes;
+const decksController= controllers.decks;
+const usersController= controllers.users;
 
 var router = express.Router();
 
