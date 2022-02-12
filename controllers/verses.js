@@ -4,7 +4,8 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Verse
 exports.create = (req, res) => {
              // Validate request
-                if (!req.body!=undefined) {
+   
+                if (req.body==undefined) {
                     res.status(400).send({
                     message: "Content can not be empty!"
                     });
