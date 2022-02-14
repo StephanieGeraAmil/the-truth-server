@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true}));
 
 
 // app.use('/verses', routerVerses);
-app.use('/verses', router);
+app.use('/', router);
 app.get('/',(req,res)=>{ res.send('Hello to the Truth Aplication')});
 
 const PORT = process.env.PORT||5432;
