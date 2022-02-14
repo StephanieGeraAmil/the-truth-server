@@ -1,6 +1,8 @@
 const e = require("express");
 const db = require("../models");
 const Deck = db.Deck;
+const Verse = db.Verse;
+const Note = db.Notes;
 
 
 
@@ -146,67 +148,124 @@ exports.delete = async (req, res) => {
   
 };
 
-// exports.addSk=async(req,res)=>{
+exports.addVerseToDeck=async(req,res)=>{
 
-//   //the body will contain the verse id and the search key id
-//       // Validate request
+      // Validate request
    
-//         if (req.body==undefined) {
-//             res.status(400).send({
-//             message: "Content can not be empty!"
-//             });
-//             return;
-//         }else
-//           if(req.body.searched_key_id==undefined){
-//             res.status(400).send({
-//             message: "You need to specify the searched key id"
-//             });
-//             return;
-//           }else if(req.body.verse_id==undefined){
-//              res.status(400).send({
-//             message: "You need to specify the verse id"
-//             });
-//             return;
+        if (req.body==undefined) {
+            res.status(400).send({
+            message: "Content can not be empty!"
+            });
+            return;
+        }else
+          if(req.body.verse_id==undefined){
+            res.status(400).send({
+            message: "You need to specify the verse id"
+            });
+            return;
+          }else if(req.body.deck_id==undefined){
+             res.status(400).send({
+            message: "You need to specify the deck id"
+            });
+            return;
 
-//         };
+        };
         
 
-//     // Search Key
-//         const sk_id =  req.body.searched_key_id;
-//     //verse id
-//         const verse_id = req.body.verse_id;
+   
+        const deck_id =  req.body.deck_id;
+        const verse_id = req.body.verse_id;
 
-//   try{
-//         const verse= await Verse.findByPk(verse_id);
+  try{
+        const verse= await Verse.findByPk(verse_id);
 
-//         const key= await SearchKeys.findByPk(sk_id);
+        const deck= await Deck.findByPk(deck_id);
   
-//         if(!verse ){
-//           res.status(400).send({
-//             message: "There is no verse with that id"
-//             });
-//           return;
-//         }
-//         if(!key ){
-//           res.status(400).send({
-//             message: "There is no key with that id"
-//             });
-//           return;
-//         }
+        if(!verse ){
+          res.status(400).send({
+            message: "There is no verse with that id"
+            });
+          return;
+        }
+        if(!deck ){
+          res.status(400).send({
+            message: "There is no deck with that id"
+            });
+          return;
+        }
        
-//           await key.addVerse(verse); 
-//           res.status(204).send({
-//                     message: "the relationship was saved"
-//                   });
+          await deck.addVerse(verse); 
+          res.status(204).send({
+                    message: "the relationship was saved"
+                  });
         
-//   }catch(err){
-//             res.status(500).send({
-//               message: "Could not add the relationship  "+ err 
-//             });
-//   };
+  }catch(err){
+            res.status(500).send({
+              message: "Could not add the relationship  "+ err 
+            });
+  };
    
-// };
+};
 
+
+exports.addNoteToDeck=async(req,res)=>{
+
+      // Validate request
+   
+        if (req.body==undefined) {
+            res.status(400).send({
+            message: "Content can not be empty!"
+            });
+            return;
+        }else
+          if(req.body.note_id==undefined){
+            res.status(400).send({
+            message: "You need to specify the node id"
+            });
+            return;
+          }else if(req.body.deck_id==undefined){
+             res.status(400).send({
+            message: "You need to specify the deck id"
+            });
+            return;
+
+        };
+        
+
+   
+        const deck_id =  req.body.deck_id;
+        const note_id = req.body.note_id;
+
+  try{
+        const note= await Note.findByPk(note_id);
+
+        const deck= await Deck.findByPk(deck_id);
+  
+        if(!note ){
+          res.status(400).send({
+            message: "There is no note with that id"
+            });
+          return;
+        }
+        if(!deck ){
+          res.status(400).send({
+            message: "There is no deck with that id"
+            });
+          return;
+        }
+       
+          await deck.addNotes(note); 
+          res.status(204).send({
+                    message: "the relationship was saved"
+                  });
+        
+  }catch(err){
+            res.status(500).send({
+              message: "Could not add the relationship  "+ err 
+            });
+  };
+   
+};
 
 
 

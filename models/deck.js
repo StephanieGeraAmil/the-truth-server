@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Deck extends Model {
     /**
@@ -17,15 +15,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'deck_id'
       });
         Deck.belongsToMany(models.Notes, {
-        through: 'NotesVerses',
+        through: 'DecksNotes',
         as: 'notes',
         foreignKey: 'deck_id'
       });
 
-         Deck.belongsTo(models.User, {
-        foreignKey: 'user_id',
-        as: 'users'
-      });
+         Deck.belongsTo(models.User
+          ,{
+            foreignKey: 'user_id'
+             ,as: 'user'
+         }
+         );
     }
   }
   Deck.init({
@@ -37,3 +37,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Deck;
 };
+

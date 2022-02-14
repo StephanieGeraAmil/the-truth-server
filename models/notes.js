@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
         Notes.belongsToMany(models.Deck, {
-        through: 'NotesVerses',
+        through: 'DecksNotes',
         as: 'decks',
         foreignKey: 'note_id'
       });

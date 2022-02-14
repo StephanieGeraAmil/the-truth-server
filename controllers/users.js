@@ -1,7 +1,7 @@
 const e = require("express");
 const db = require("../models");
 const User = db.User;
-
+const Deck = db.Deck;
 
 
 const Op = db.Sequelize.Op;
@@ -149,80 +149,65 @@ exports.delete = async (req, res) => {
 
 
 
-  // addWithStudents(req, res) {
-  //   return Classroom
-  //     .create({
-  //       class_name: req.body.class_name,
-  //       students: req.body.students,
-  //     }, {
-  //     	include: [{
-  //         model: Student,
-  //         as: 'students'
-  //       }]
-  //     })
-  //     .then((classroom) => res.status(201).send(classroom))
-  //     .catch((error) => res.status(400).send(error));
-  // },
-// exports.addDeck=async(req,res)=>{
 
-//   //the body will contain the verse id and the search key id
-//       // Validate request
+exports.addDeckToUser=async(req,res)=>{
+
+ 
+      // Validate request
    
-//         if (req.body==undefined) {
-//             res.status(400).send({
-//             message: "Content can not be empty!"
-//             });
-//             return;
-//         }else
-//           if(req.body.searched_key_id==undefined){
-//             res.status(400).send({
-//             message: "You need to specify the searched key id"
-//             });
-//             return;
-//           }else if(req.body.verse_id==undefined){
-//              res.status(400).send({
-//             message: "You need to specify the verse id"
-//             });
-//             return;
+        if (req.body==undefined) {
+            res.status(400).send({
+            message: "Content can not be empty!"
+            });
+            return;
+        }else
+          if(req.body.deck_id==undefined){
+            res.status(400).send({
+            message: "You need to specify the searched deck id"
+            });
+            return;
+          }else if(req.body.user_id==undefined){
+             res.status(400).send({
+            message: "You need to specify the user id"
+            });
+            return;
 
-//         };
-        
+        };
+        const deck_id=req.body.deck_id;
+        const user_id=req.body.user_id;
+      
 
-//     // Search Key
-//         const sk_id =  req.body.searched_key_id;
-//     //verse id
-//         const verse_id = req.body.verse_id;
-
-//   try{
-//         const verse= await Verse.findByPk(verse_id);
-
-//         const key= await SearchKeys.findByPk(sk_id);
-  
-//         if(!verse ){
-//           res.status(400).send({
-//             message: "There is no verse with that id"
-//             });
-//           return;
-//         }
-//         if(!key ){
-//           res.status(400).send({
-//             message: "There is no key with that id"
-//             });
-//           return;
-//         }
+  try{
        
-//           await key.addVerse(verse); 
-//           res.status(204).send({
-//                     message: "the relationship was saved"
-//                   });
+        const usr= await User.findByPk(user_id);    
+        if(!usr ){
+          res.status(400).send({
+            message: "There is no user with that id"
+            });
+          return;
+        }
+        const deck= await Deck.findByPk(deck_id);
+        if(!deck ){
+              res.status(400).send({
+                message: "There is no deck with that id"
+                });
+              return;
+            }
+  
+        await usr.addDeck(deck);
+           res.status(204).send({
+                    message: "the relationship was saved"
+                  });
         
-//   }catch(err){
-//             res.status(500).send({
-//               message: "Could not add the relationship  "+ err 
-//             });
-//   };
+
+      
+  }catch(err){
+            res.status(500).send({
+              message: "Could not add the relationship  "+ err 
+            });
+  };
    
-// };
+};
 
 
 
