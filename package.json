@@ -16,8 +16,8 @@
     "db:migrate:undo": "sequelize-cli db:migrate:undo",
     "db:g:migration": "sequelize-cli migration:generate --name",
     "db:g:seed": "sequelize-cli seed:generate --name",
-    "db:seeds": "sequelize-cli db:seed:all",
-    "build":"sequelize db:migrate --env production && npm run index.js"
+    "db:seeds": "sequelize-cli db:seed:all"
+ 
   },
   "author": "",
   "license": "MIT",
