@@ -22,7 +22,7 @@ module.exports=  {
   },
   "production": {
   
-    "host": DATABASE_URL,
+    "use_env_variable": DATABASE_URL
    
   }
 }
