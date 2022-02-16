@@ -30,8 +30,8 @@ module.exports=  {
     "use_env_variable": DATABASE_URL,
     "dialectOptions": {
       'ssl': {
-        require: true,
-        rejectUnauthorized: false
+        "require": true,
+        "rejectUnauthorized": false
       }
     }
    
