@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js && sequelize db:migrate",
+    "start": "sequelize db:migrate && nodemon index.js",
     
     "db:create": "sequelize-cli db:create",
     "model:generate": "sequelize-cli model:generate",
