@@ -21,9 +21,9 @@ module.exports=  {
     "dialect": "postgres"
   },
   "production": {
-   "username": USER,
-    "password": PASSWORD,
+  
     "database": DATABASE_URL,
+    "port":PORT,
     "dialect": "postgres"
   }
 }
