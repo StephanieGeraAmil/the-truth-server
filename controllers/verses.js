@@ -43,6 +43,7 @@ exports.create = (req, res) => {
 // Retrieve all Verses from the database.
 exports.findAll = async (req, res) => {
   try{
+   
     
       const data = await Verse.findAll(
                     {

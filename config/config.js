@@ -5,7 +5,7 @@ const {CONNECTION_URL,USER,PORT,PASSWORD,DB,DATABASE_URL}= process.env;
 
 module.exports=  {
   "development": {
-    "port":PORT,
+  
     "username": USER,
     "password": PASSWORD,
     "database": DB,
@@ -13,7 +13,7 @@ module.exports=  {
     "dialect": "postgres"
   },
   "test": {
-    "port":PORT,
+    
     "username": USER,
     "password": PASSWORD,
     "database": DB,
@@ -21,8 +21,7 @@ module.exports=  {
     "dialect": "postgres"
   },
   "production": {
-    "port":PORT,
-    "username": USER,
+   "username": USER,
     "password": PASSWORD,
     "database": DATABASE_URL,
     "dialect": "postgres"

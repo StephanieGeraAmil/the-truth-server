@@ -5,6 +5,7 @@ const router = require('./routes');
 const cors = require('cors');
 
 
+
 dotenv.config();
 const app = express();
 app.use(cors());
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: true}));
 app.use('/', router);
 app.get('/',(req,res)=>{ res.send('Hello to the Truth Aplication')});
 
-const PORT = process.env.PORT||5432;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
