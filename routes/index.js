@@ -5,6 +5,7 @@ const searchKeysController= controllers.search_keys;
 const notesController= controllers.notes;
 const decksController= controllers.decks;
 const usersController= controllers.users;
+const versesQuotesController=controllers.verses_quotes;
 
 var router = express.Router();
 
@@ -13,6 +14,12 @@ router.get('/verses/:id', versesController.findById);
 router.post('/verses', versesController.create);
 router.patch('/verses/:id', versesController.update);
 router.delete('/verses/:id',versesController.delete);
+
+router.get('/verse-quotes', versesQuotesController.findAll);
+router.get('/verse-quotes/:id', versesQuotesController.findById);
+router.post('/verse-quotes', versesQuotesController.create);
+router.patch('/verse-quotes/:id', versesQuotesController.update);
+router.delete('/verse-quotes/:id',versesQuotesController.delete);
 
 
 router.get('/sk', searchKeysController.findAll);
