@@ -1,19 +1,30 @@
 const express = require('express');
+const dotenv  = require('dotenv');
+// const routerVerses = require('./routes/verses.js');
+const router = require('./routes');
 const cors = require('cors');
-// const dotenv  = require('dotenv');
-const router = require('./router');
 
-// dotenv.config();
+
+
+dotenv.config();
 const app = express();
 app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true}));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
+
+// app.use('/verses', routerVerses);
 app.use('/', router);
 app.get('/',(req,res)=>{ res.send('Hello to the Truth Aplication')});
 
-const port= process.env.PORT || 5000;
-app.listen(port, ()=> console.log(`server running on port ${port}`));
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
+
+
+
 
 
 

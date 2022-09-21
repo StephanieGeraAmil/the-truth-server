@@ -8,10 +8,16 @@
     "node": "14.17.3"
   },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
     "db:create": "sequelize-cli db:create",
+    "model:generate": "sequelize-cli model:generate",
     "db:migrate": "sequelize-cli db:migrate",
-    "model:generate": "sequelize-cli model:generate"
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:g:migration": "sequelize-cli migration:generate --name",
+    "db:g:seed": "sequelize-cli seed:generate --name",
+    "db:seeds": "sequelize-cli db:seed:all",
+     "sequelize": "dotenv sequelize"
   },
   "author": "",
   "license": "MIT",
@@ -23,7 +29,7 @@
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
     "sequelize": "^6.16.1",
-    "uuid": "^9.0.0"
+    "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
     "pg-hstore": "^2.3.4",
