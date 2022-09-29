@@ -5,7 +5,7 @@ module.exports = {
     try {
       const result = await sequelize.transaction(async (t) => {
         await queryInterface.createTable(
-          "users",
+          "Users",
           {
             id: {
               allowNull: false,
@@ -35,7 +35,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "decks",
+          "Decks",
           {
             id: {
               allowNull: false,
@@ -61,7 +61,7 @@ module.exports = {
               type: DataTypes.UUID,
               references: {
                 model: {
-                  tableName: "users",
+                  tableName: "Users",
                 },
                 key: "id",
               },
@@ -73,7 +73,7 @@ module.exports = {
 
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "imgs",
+          "Imgs",
           {
             id: {
               allowNull: false,
@@ -100,7 +100,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "notes",
+          "Notes",
           {
             id: {
               allowNull: false,
@@ -127,7 +127,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "tags",
+          "Tags",
           {
             id: {
               allowNull: false,
@@ -154,7 +154,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "verses",
+          "Verses",
           {
             id: {
               allowNull: false,
@@ -193,7 +193,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "cards",
+          "Cards",
           {
             id: {
               allowNull: false,
@@ -209,7 +209,7 @@ module.exports = {
               defaultValue: DataTypes.UUIDV4,
               references: {
                 model: {
-                  tableName: "notes",
+                  tableName: "Notes",
                 },
                 key: "id",
               },
@@ -220,7 +220,7 @@ module.exports = {
               defaultValue: DataTypes.UUIDV4,
               references: {
                 model: {
-                  tableName: "imgs",
+                  tableName: "Imgs",
                 },
                 key: "id",
               },
@@ -241,7 +241,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "cards_verses",
+          "Cards_Verses",
           {
             CardsId: {
               type: DataTypes.UUID,
@@ -266,7 +266,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "verses_tags",
+          "Verses_Tags",
           {
             VersesId: {
               type: DataTypes.UUID,
@@ -291,7 +291,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "cards_decks",
+          "Cards_Decks",
           {
             order: {
               type: DataTypes.DECIMAL,
@@ -324,16 +324,16 @@ module.exports = {
   },
   async down(queryInterface, DataTypes) {
     try {
-      await queryInterface.dropTable("verses_tags");
-      await queryInterface.dropTable("cards_decks");
-      await queryInterface.dropTable("cards_verses");
-      await queryInterface.dropTable("decks");
-      await queryInterface.dropTable("users");
-      await queryInterface.dropTable("imgs");
-      await queryInterface.dropTable("notes");
-      await queryInterface.dropTable("tags");
-      await queryInterface.dropTable("verses");
-      await queryInterface.dropTable("cards");
+      await queryInterface.dropTable("Verses_Tags");
+      await queryInterface.dropTable("Cards_Decks");
+      await queryInterface.dropTable("Cards_Verses");
+      await queryInterface.dropTable("Decks");
+      await queryInterface.dropTable("Users");
+      await queryInterface.dropTable("Imgs");
+      await queryInterface.dropTable("Notes");
+      await queryInterface.dropTable("Tags");
+      await queryInterface.dropTable("Verses");
+      await queryInterface.dropTable("Cards");
     } catch {
       console.log("unable to process the undone on the migration");
     }

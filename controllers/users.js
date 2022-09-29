@@ -5,8 +5,10 @@ const Deck = db.Deck;
 
 const Op = db.sequelize.Op;
 // Create and Save a new User
+
 exports.create = (req, res) => {
   // Validate request
+  console.log(req.body)
   if (req.body == undefined) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -33,13 +35,14 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 exports.findAll = async (req, res) => {
   try {
-    const data = await User.findAll({
-      //         include: [{ }],
+    const data = await User
+      .findAll (
+     {
       order: [
-        ["createdAt", "DESC"],
-        [{ model: User, as: "Users" }, "createdAt", "DESC"],
+        ["name", "ASC"]
       ],
-    });
+    }
+     );
     res.send(data);
   } catch (err) {
     res.status(500).send({

@@ -10,7 +10,7 @@ module.exports = {
         ////////////////////////////////
         ///users
         await queryInterface.bulkInsert(
-          "users",
+          "Users",
           [
             {
               id: uuidv4(),
@@ -44,13 +44,13 @@ module.exports = {
           { transaction: t }
         );
         const users = await queryInterface.sequelize.query(
-          `SELECT id from "users";`,
+          `SELECT id from "Users";`,
           { transaction: t }
         );
         ////////////////////////////////
         ///decks
         await queryInterface.bulkInsert(
-          "decks",
+          "Decks",
           [
             // {
             //   id: uuidv4(),
@@ -108,7 +108,7 @@ module.exports = {
         ////////////////////////////////
         ///notes
         await queryInterface.bulkInsert(
-          "notes",
+          "Notes",
           [
             {
               id: uuidv4(),
@@ -191,7 +191,7 @@ module.exports = {
         ////////////////////////////////
         ///verses
         await queryInterface.bulkInsert(
-          "verses",
+          "Verses",
           [
             // {
             //   id: uuidv4(),
@@ -365,17 +365,17 @@ module.exports = {
         //   {}
         // );
         const verses = await queryInterface.sequelize.query(
-          `SELECT id from "verses";`,
+          `SELECT id from "Verses";`,
           { transaction: t }
         );
         const notes = await queryInterface.sequelize.query(
-          `SELECT id from "notes";`,
+          `SELECT id from "Notes";`,
           { transaction: t }
         );
         ////////////////////////////////
         ///cards
         await queryInterface.bulkInsert(
-          "cards",
+          "Cards",
           [
             {
               id: uuidv4(),
@@ -407,7 +407,7 @@ module.exports = {
         ////////////////////////////////
         ///tags
         await queryInterface.bulkInsert(
-          "tags",
+          "Tags",
           [
             {
               id: uuidv4(),
@@ -465,11 +465,11 @@ module.exports = {
         ///verses_tags
 
         const tags = await queryInterface.sequelize.query(
-          `SELECT id from "tags";`,
+          `SELECT id from "Tags";`,
           { transaction: t }
         );
         await queryInterface.bulkInsert(
-          "verses_tags",
+          "Verses_Tags",
           [
             {
               VersesId: verses[0][0].id,
@@ -498,15 +498,15 @@ module.exports = {
         ////////////////////////////////
         ///cards_decks
         const cards = await queryInterface.sequelize.query(
-          `SELECT id from "cards";`,
+          `SELECT id from "Cards";`,
           { transaction: t }
         );
         const decks = await queryInterface.sequelize.query(
-          `SELECT id from "decks";`,
+          `SELECT id from "Decks";`,
           { transaction: t }
         );
         await queryInterface.bulkInsert(
-          "cards_decks",
+          "Cards_Decks",
           [
             {
               CardsId: cards[0][0].id,
@@ -545,7 +545,7 @@ module.exports = {
         ////////////////////////////////
         ///cards_verses
         await queryInterface.bulkInsert(
-          "cards_verses",
+          "Cards_Verses",
           [
             {
               CardsId: cards[0][0].id,
@@ -592,14 +592,15 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     try {
-      await queryInterface.bulkDelete("cards_decks", null, {});
-      await queryInterface.bulkDelete("verses_tags", null, {});
-      await queryInterface.bulkDelete("decks", null, {});
-      await queryInterface.bulkDelete("users", null, {});
-      await queryInterface.bulkDelete("notes", null, {});
-      await queryInterface.bulkDelete("tags", null, {});
-      await queryInterface.bulkDelete("verses", null, {});
-      await queryInterface.bulkDelete("cards", null, {});
+      await queryInterface.bulkDelete("Cards_Decks", null, {});
+      await queryInterface.bulkDelete("Verses_Tags", null, {});
+      await queryInterface.dropTable("Cards_Verses");
+      await queryInterface.bulkDelete("Decks", null, {});
+      await queryInterface.bulkDelete("Users", null, {});
+      await queryInterface.bulkDelete("Notes", null, {});
+      await queryInterface.bulkDelete("Tags", null, {});
+      await queryInterface.bulkDelete("Verses", null, {});
+      await queryInterface.bulkDelete("Cards", null, {});
     } catch (e) {
       console.log(e);
     }
