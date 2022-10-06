@@ -57,7 +57,7 @@ module.exports = {
               type: DataTypes.DATE,
               defaultValue: DataTypes.NOW,
             },
-            owner: {
+            UserId: {
               type: DataTypes.UUID,
               references: {
                 model: {
@@ -203,7 +203,7 @@ module.exports = {
               defaultValue: DataTypes.UUIDV4,
             },
 
-            note: {
+            NoteId: {
               allowNull: true,
               type: DataTypes.UUID,
               defaultValue: DataTypes.UUIDV4,
@@ -212,9 +212,9 @@ module.exports = {
                   tableName: "Notes",
                 },
                 key: "id",
-              },
+              }, 
             },
-            image: {
+            ImgId: {
               allowNull: true,
               type: DataTypes.UUID,
               defaultValue: DataTypes.UUIDV4,

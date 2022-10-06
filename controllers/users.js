@@ -1,17 +1,30 @@
 const e = require("express");
 const db = require("../sequelize/models");
+const { v4: uuidv4 } = require("uuid");
 const User = db.User;
 const Deck = db.Deck;
 
 const Op = db.sequelize.Op;
-// Create and Save a new User
+// Create and Save a new User 
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
-  console.log(req.body)
+
   if (req.body == undefined) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Content can't be empty!",
+    });
+    return;
+  }
+  if (!req.body.name) {
+    res.status(400).send({
+      message: "A User name is required!",
+    });
+    return;
+  }
+  if (!req.body.email) {
+    res.status(400).send({
+      message: "A User email is required!",
     });
     return;
   }
@@ -19,6 +32,10 @@ exports.create = (req, res) => {
   // Create a User
   const usr = {
     name: req.body.name,
+    email: req.body.email,
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   // Save User in the database
@@ -35,14 +52,9 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 exports.findAll = async (req, res) => {
   try {
-    const data = await User
-      .findAll (
-     {
-      order: [
-        ["name", "ASC"]
-      ],
-    }
-     );
+    const data = await User.findAll({
+      order: [["name", "ASC"]],
+    });
     res.send(data);
   } catch (err) {
     res.status(500).send({
@@ -61,7 +73,7 @@ exports.findById = async (req, res) => {
       res.send(data);
     } else {
       res.status(404).send({
-        message: `Cannot find User with id=${id}.`,
+        message: `Can't find User with id=${id}.`,
       });
     }
   } catch (err) {
@@ -75,31 +87,39 @@ exports.findById = async (req, res) => {
 exports.update = async (req, res) => {
   if (req.body == undefined) {
     res.status(409).send({
-      message: "Content can not be empty!",
+      message: "Content can't be empty!",
+    });
+    return;
+  }
+  if (!req.body.name && !req.body.email) {
+    res.status(400).send({
+      message: " a new name or email is required!",
     });
     return;
   }
   const id = req.params.id;
-
-  const updatedUser = {};
+  let updatedUser = {};
   if (req.body.name) updatedUser = { ...updatedUser, name: req.body.name };
   if (req.body.email) updatedUser = { ...updatedUser, email: req.body.email };
 
   try {
+    console.log(updatedUser);
+    console.log(id);
     const num = await User.update(updatedUser, { where: { id: id } });
 
+    console.log(num);
     if (num == 1) {
       res.status(204).send({
         message: "User was updated successfully!",
       });
     } else {
       res.status(409).send({
-        message: `Cannot update User with id=${id}. Maybe User was not found!`,
+        message: `Can't update User with id=${id}. Maybe User wasn't found!`,
       });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Could not update User with id=" + id,
+      message: "Couldn't update User with id=" + id,
     });
   }
 };
@@ -115,12 +135,12 @@ exports.delete = async (req, res) => {
       });
     } else {
       res.send({
-        message: `Cannot delete User with id=${id}. Maybe User was not found!`,
+        message: `Can't delete User with id=${id}. Maybe User wasn't found!`,
       });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Could not delete User with id=" + id,
+      message: "Couldn't delete User with id=" + id,
     });
   }
 };
@@ -131,7 +151,7 @@ exports.delete = async (req, res) => {
 
 //         if (req.body==undefined) {
 //             res.status(400).send({
-//             message: "Content can not be empty!"
+//             message: "Content can't be empty!"
 //             });
 //             return;
 //         }else
@@ -174,7 +194,7 @@ exports.delete = async (req, res) => {
 
 //   }catch(err){
 //             res.status(500).send({
-//               message: "Could not add the relationship  "+ err
+//               message: "Couldn't add the relationship  "+ err
 //             });
 //   };
 

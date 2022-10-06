@@ -45,17 +45,7 @@ exports.findAll = async (req, res) => {
   try{
     
       const data = await Deck.findAll(
-                    // {
-                    //         include: [{
-                    //           model: Deck,
-                    //           as: 'decks'
-                    //         }],
-                    //         order: [
-                    //           ['createdAt', 'DESC'],
-                    //           [{model: Deck,as: 'decks'}, 'createdAt', 'DESC'],
-                    //         ],
-                    //       }
-
+            
       );
       res.send(data);
     }catch(err) {

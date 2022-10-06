@@ -11,6 +11,7 @@
     "start": "nodemon index.js",
     "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
+    "db:seeds": "sequelize-cli db:seed:all",
     "model:generate": "sequelize-cli model:generate"
   },
   "author": "",
