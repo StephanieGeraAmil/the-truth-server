@@ -48,11 +48,19 @@ router.delete('/users/:id',usersController.delete);
 
 
 
-// /* Advance Router */
-// router.post('/verses/add_sk', versesController.addSk);
-// router.post('/users/add_deck', usersController.addDeckToUser);
-// router.post('/decks/add_notes', decksController.addNoteToDeck);
-// router.post('/decks/add_verses', decksController.addVerseToDeck);
+// /* Asociations Routes */
+router.get('/get_verses_of_tag/:id', tagsController.get_verses_of_tag);
+router.get('/get_tags_of_verse/:id', versesController.get_tags_of_verse);
+router.get('/add_tag_verse/:id', tagsController.add_tag_verse);
+router.get('/delete_tag_verse/:id', tagsController.delete_tag_verse);
+
+router.get('/get_verses_of_card/:id', cardsController.get_verses_of_card);
+router.get('/add_card_verse/:id', cardsController.add_card_verse);
+router.get('/delete_card_verse/:id', cardsController.delete_card_verse);
+
+router.get('/get_cards_of_deck/:id', decksController.get_cards_of_deck);
+router.get('/add_card_deck/:id', decksController.add_card_deck);
+router.get('/delete_card_deck/:id', decksController.delete_card_deck);
 
 
 

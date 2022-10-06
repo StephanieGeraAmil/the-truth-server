@@ -241,13 +241,13 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "Cards_Verses",
+          "cards_verses",
           {
-            CardsId: {
+            CardId: {
               type: DataTypes.UUID,
               primaryKey: true,
             },
-            VersesId: {
+            VerseId: {
               type: DataTypes.UUID,
               primaryKey: true,
             },
@@ -266,9 +266,9 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "Verses_Tags",
+          "verses_tags",
           {
-            VersesId: {
+            VerseId: {
               type: DataTypes.UUID,
               primaryKey: true,
             },
@@ -291,16 +291,16 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "Cards_Decks",
+          "cards_decks",
           {
             order: {
               type: DataTypes.DECIMAL,
             },
-            CardsId: {
+            CardId: {
               type: DataTypes.UUID,
               primaryKey: true,
             },
-            DecksId: {
+            DeckId: {
               type: DataTypes.UUID,
               primaryKey: true,
             },
@@ -324,9 +324,9 @@ module.exports = {
   },
   async down(queryInterface, DataTypes) {
     try {
-      await queryInterface.dropTable("Verses_Tags");
-      await queryInterface.dropTable("Cards_Decks");
-      await queryInterface.dropTable("Cards_Verses");
+      await queryInterface.dropTable("verses_tags");
+      await queryInterface.dropTable("cards_decks");
+      await queryInterface.dropTable("cards_verses");
       await queryInterface.dropTable("Decks");
       await queryInterface.dropTable("Users");
       await queryInterface.dropTable("Imgs");

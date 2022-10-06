@@ -107,9 +107,7 @@ exports.update = async (req, res) => {
     return;
   }
   const id = req.params.id;
-  let //updatedVerse = {};
-  updatedVerse={
-   // ...updatedVerse,
+  let updatedVerse={
     scripture: req.body.scripture,
     book: req.body.book,
     chapter: req.body.chapter,
@@ -159,3 +157,20 @@ exports.delete = async (req, res) => {
     });
   }
 };
+
+exports.get_tags_of_verse = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const verse = await Verse.findByPk(id);
+    const tag = await verse.getTags();
+    res.send({
+      message: tag,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving verses of tags.",
+    });
+  }
+};
+

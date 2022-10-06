@@ -89,7 +89,7 @@ module.exports = {
             },
             {
               id: uuidv4(),
-              name: "Fav",
+              name: "Will Power",
               UserId: users[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
@@ -469,24 +469,24 @@ module.exports = {
           { transaction: t }
         );
         await queryInterface.bulkInsert(
-          "Verses_Tags",
+          "verses_tags",
           [
             {
-              VersesId: verses[0][0].id,
+              VerseId: verses[0][0].id,
               TagId: tags[0][0].id,
 
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              VersesId: verses[0][1].id,
+              VerseId: verses[0][1].id,
               TagId: tags[0][0].id,
 
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              VersesId: verses[0][2].id,
+              VerseId: verses[0][2].id,
               TagId: tags[0][0].id,
 
               createdAt: new Date(),
@@ -506,36 +506,36 @@ module.exports = {
           { transaction: t }
         );
         await queryInterface.bulkInsert(
-          "Cards_Decks",
+          "cards_decks",
           [
             {
-              CardsId: cards[0][0].id,
-              DecksId: decks[0][0].id,
+              CardId: cards[0][0].id,
+              DeckId: decks[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              CardsId: cards[0][1].id,
-              DecksId: decks[0][0].id,
+              CardId: cards[0][1].id,
+              DeckId: decks[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              CardsId: cards[0][2].id,
-              DecksId: decks[0][0].id,
+              CardId: cards[0][2].id,
+              DeckId: decks[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
 
             {
-              CardsId: cards[0][2].id,
-              DecksId: decks[0][1].id,
+              CardId: cards[0][2].id,
+              DeckId: decks[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              CardsId: cards[0][3].id,
-              DecksId: decks[0][1].id,
+              CardId: cards[0][3].id,
+              DeckId: decks[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
@@ -545,36 +545,36 @@ module.exports = {
         ////////////////////////////////
         ///cards_verses
         await queryInterface.bulkInsert(
-          "Cards_Verses",
+          "cards_verses",
           [
             {
-              CardsId: cards[0][0].id,
-              VersesId: verses[0][0].id,
+              CardId: cards[0][0].id,
+              VerseId: verses[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              CardsId: cards[0][1].id,
-              VersesId: verses[0][0].id,
+              CardId: cards[0][1].id,
+              VerseId: verses[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              CardsId: cards[0][2].id,
-              VersesId: verses[0][0].id,
+              CardId: cards[0][2].id,
+              VerseId: verses[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
 
             {
-              CardsId: cards[0][2].id,
-              VersesId: verses[0][1].id,
+              CardId: cards[0][2].id,
+              VerseId: verses[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
-              CardsId: cards[0][3].id,
-              VersesId: verses[0][1].id,
+              CardId: cards[0][3].id,
+              VerseId: verses[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
@@ -592,9 +592,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     try {
-      await queryInterface.bulkDelete("Cards_Decks", null, {});
-      await queryInterface.bulkDelete("Verses_Tags", null, {});
-      await queryInterface.dropTable("Cards_Verses");
+      await queryInterface.bulkDelete("cards_decks", null, {});
+      await queryInterface.bulkDelete("verses_tags", null, {});
+      await queryInterface.dropTable("cards_verses");
       await queryInterface.bulkDelete("Decks", null, {});
       await queryInterface.bulkDelete("Users", null, {});
       await queryInterface.bulkDelete("Notes", null, {});

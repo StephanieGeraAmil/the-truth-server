@@ -3,7 +3,7 @@ const db = require("../sequelize/models");
 const { v4: uuidv4 } = require("uuid");
 
 const Tag = db.Tag;
-
+const Verse = db.Verse;
 const Op = db.sequelize.Op;
 // Create and Save a new Tag
 
@@ -78,11 +78,11 @@ exports.findById = async (req, res) => {
 exports.update = async (req, res) => {
   if (req.body == undefined) {
     res.status(409).send({
-      message: "name can't be empty!",
+      message: "body can't be empty!",
     });
     return;
   }
-   if (!req.body.name) {
+  if (!req.body.name) {
     res.status(400).send({
       message: "A Tag name is required!",
     });
@@ -91,14 +91,9 @@ exports.update = async (req, res) => {
   const id = req.params.id;
   let updatedTag = {};
   if (req.body.name) updatedTag = { ...updatedTag, name: req.body.name };
- 
 
   try {
-    console.log(updatedTag);
-    console.log(id);
     const num = await Tag.update(updatedTag, { where: { id: id } });
-
-    console.log(num);
     if (num == 1) {
       res.status(204).send({
         message: "Tag was updated successfully!",
@@ -132,6 +127,66 @@ exports.delete = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: "Couldn't delete Tag with id=" + id,
+    });
+  }
+};
+
+exports.get_verses_of_tag = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const tag = await Tag.findByPk(id);
+    const verse = await tag.getVerses();
+    res.send({
+      message: verse,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving verses of tags.",
+    });
+  }
+};
+exports.add_tag_verse = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!req.body.verse) {
+      res.status(400).send({
+        message: "A verse is required!",
+      });
+      return;
+    }
+
+    const tag = await Tag.findByPk(id);
+    const data = await tag.addVerse(req.body.verse);
+    res.send({
+      message: data,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving verses of tags.",
+    });
+  }
+};
+exports.delete_tag_verse = async (req, res) => {
+try {
+    const id = req.params.id;
+    if (!req.body.verse) {
+      res.status(400).send({
+        message: "A verse is required!",
+      });
+      return;
+    }
+
+    const tag = await Tag.findByPk(id);
+    const data = await tag.removeVerse(req.body.verse);
+    res.send({
+      message: data,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving verses of tags.",
     });
   }
 };

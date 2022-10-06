@@ -18,7 +18,6 @@ exports.create = async (req, res) => {
     });
     return;
   }
-  
 
   // Create a Card
   let crd = {
@@ -26,13 +25,13 @@ exports.create = async (req, res) => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  
-  if (!req.body.note ) {
-    crd={...crd, note:req.body.note};
+
+  if (!req.body.note) {
+    crd = { ...crd, note: req.body.note };
   }
-  
-  if (!req.body.img ) {
-    crd={...crd, img:req.body.img};
+
+  if (!req.body.img) {
+    crd = { ...crd, img: req.body.img };
   }
 
   // Save Card in the database
@@ -50,7 +49,7 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   try {
     const data = await Card.findAll({
-      include: [{ model: Note},{model: Img}],
+      include: [{ model: Note }, { model: Img }],
       // order: [["name", "ASC"]],
     });
     res.send(data);
@@ -89,7 +88,7 @@ exports.update = async (req, res) => {
     });
     return;
   }
-   if (!req.body.img && !req.body.note) {
+  if (!req.body.img && !req.body.note) {
     res.status(400).send({
       message: "A Card content to update is required!",
     });
@@ -142,3 +141,64 @@ exports.delete = async (req, res) => {
     });
   }
 };
+
+exports.get_verses_of_card = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const card = await Card.findByPk(id);
+    const verse = await card.getVerses();
+    res.send({
+      message: verse,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving verses of cards.",
+    });
+  }
+};
+exports.add_card_verse = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!req.body.verse) {
+      res.status(400).send({
+        message: "A verse is required!",
+      });
+      return;
+    }
+
+    const card = await Card.findByPk(id);
+    const data = await card.addVerse(req.body.verse);
+    res.send({
+      message: data,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving cards of verses.",
+    });
+  }
+};
+exports.delete_card_verse = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!req.body.verse) {
+      res.status(400).send({
+        message: "A verse is required!",
+      });
+      return;
+    }
+
+    const card = await Card.findByPk(id);
+    const data = await card.removeVerse(req.body.verse);
+    res.send({
+      message: data,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving cards of verses.",
+    });
+  }
+};
+
