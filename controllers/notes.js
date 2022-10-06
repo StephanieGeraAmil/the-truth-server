@@ -24,7 +24,7 @@ exports.create = async (req, res) => {
 
   // Create a Note
   const nt = {
-    content: "If it's good for me, it's a Yes",
+    content: req.body.content,
     id: uuidv4(),
     createdAt: new Date(),
     updatedAt: new Date(),

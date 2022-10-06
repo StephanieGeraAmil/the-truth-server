@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
 
   // Create a Tag
   const tg = {
-    name: "If it's good for me, it's a Yes",
+    name: req.body.name,
     id: uuidv4(),
     createdAt: new Date(),
     updatedAt: new Date(),

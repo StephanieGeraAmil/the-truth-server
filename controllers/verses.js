@@ -2,136 +2,160 @@ const e = require("express");
 const db = require("../sequelize/models");
 const { v4: uuidv4 } = require("uuid");
 
-const Note = db.Note;
+const Verse = db.Verse;
 
 const Op = db.sequelize.Op;
-// Create and Save a new Note
+// Create and Save a new Verse
 
 exports.create = async (req, res) => {
   // Validate request
 
   if (req.body == undefined) {
     res.status(400).send({
-      message: "Content can't be empty!",
+      message: "scripture can't be empty!",
     });
     return;
   }
-  if (!req.body.content) {
+  if (
+    !req.body.scripture ||
+    !req.body.book ||
+    !req.body.chapter ||
+    !req.body.verse_number ||
+    !req.body.version
+  ) {
     res.status(400).send({
-      message: "A Note content is required!",
+      message:
+        "A Verse scripture, book, chapter, verse number and version are required!",
     });
     return;
   }
 
-  // Create a Note
-  const nt = {
-    content: "If it's good for me, it's a Yes",
+  // Create a Verse
+  const vs = {
+    scripture: req.body.scripture,
+    book: req.body.book,
+    chapter: req.body.chapter,
+    verse_number: req.body.verse_number,
+    version: req.body.version,
     id: uuidv4(),
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
-  // Save Note in the database
-  Note.create(nt)
+  // Save Verse in the database
+  Verse.create(vs)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the Note.",
+        message: err.message || "Some error occurred while creating the Verse.",
       });
     });
 };
-// Retrieve all Notes from the database.
+// Retrieve all Verses from the database.
 exports.findAll = async (req, res) => {
   try {
-    const data = await Note.findAll();
+    const data = await Verse.findAll();
     res.send(data);
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Some error occurred while retrieving Notes.",
+      message: err.message || "Some error occurred while retrieving Verses.",
     });
   }
 };
 
-// Find a single Note with an id
+// Find a single Verse with an id
 exports.findById = async (req, res) => {
   const id = req.params.id;
   try {
-    const data = await Note.findByPk(id);
+    const data = await Verse.findByPk(id);
 
     if (data) {
       res.send(data);
     } else {
       res.status(404).send({
-        message: `Can't find Note with id=${id}.`,
+        message: `Can't find Verse with id=${id}.`,
       });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Error retrieving Note with id=" + id,
+      message: "Error retrieving Verse with id=" + id,
     });
   }
 };
-// Update a Note by the id in the request
+// Update a Verse by the id in the request
 
 exports.update = async (req, res) => {
   if (req.body == undefined) {
     res.status(409).send({
-      message: "Content can't be empty!",
+      message: "scripture can't be empty!",
     });
     return;
   }
-   if (!req.body.content) {
+  if (
+    !req.body.scripture ||
+    !req.body.book ||
+    !req.body.chapter ||
+    !req.body.verse_number ||
+    !req.body.version
+  ) {
     res.status(400).send({
-      message: "A Note content is required!",
+      message:
+        "A Verse scripture, book, chapter, verse number and version are required!",
     });
     return;
   }
   const id = req.params.id;
-  let updatedNote = {};
-  if (req.body.content) updatedNote = { ...updatedNote, content: req.body.content };
- 
+  let //updatedVerse = {};
+  updatedVerse={
+   // ...updatedVerse,
+    scripture: req.body.scripture,
+    book: req.body.book,
+    chapter: req.body.chapter,
+    verse_number: req.body.verse_number,
+    version: req.body.version,
+  };
 
   try {
-    console.log(updatedNote);
+    console.log(updatedVerse);
     console.log(id);
-    const num = await Note.update(updatedNote, { where: { id: id } });
+    const num = await Verse.update(updatedVerse, { where: { id: id } });
 
     console.log(num);
     if (num == 1) {
       res.status(204).send({
-        message: "Note was updated successfully!",
+        message: "Verse was updated successfully!",
       });
     } else {
       res.status(409).send({
-        message: `Can't update Note with id=${id}. Maybe Note wasn't found!`,
+        message: `Can't update Verse with id=${id}. Maybe Verse wasn't found!`,
       });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Couldn't update Note with id=" + id,
+      message: "Couldn't update Verse with id=" + id,
     });
   }
 };
-// Delete a Note with the specified id in the request
+// Delete a Verse with the specified id in the request
 exports.delete = async (req, res) => {
   const id = req.params.id;
   try {
-    const num = await Note.destroy({ where: { id: id } });
+    const num = await Verse.destroy({ where: { id: id } });
 
     if (num == 1) {
       res.send({
-        message: "Note was deleted successfully!",
+        message: "Verse was deleted successfully!",
       });
     } else {
       res.send({
-        message: `Can't delete Note with id=${id}. Maybe Note wasn't found!`,
+        message: `Can't delete Verse with id=${id}. Maybe Verse wasn't found!`,
       });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Couldn't delete Note with id=" + id,
+      message: "Couldn't delete Verse with id=" + id,
     });
   }
 };

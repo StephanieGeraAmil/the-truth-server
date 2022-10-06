@@ -22,9 +22,9 @@ exports.create = async (req, res) => {
     });
     return;
   }
-   if (!req.body.UsersId) {
+   if (!req.body.UserId) {
     res.status(400).send({
-      message: "A Deck UsersId is required!",
+      message: "A Deck UserId is required!",
     });
     return;
   }
@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
   // Create a Deck
   const dk = {
     name: req.body.name,
-    UsersId: req.body.UsersId,
+    UserId: req.body.UserId,
     id: uuidv4(), 
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -93,17 +93,17 @@ exports.update = async (req, res) => {
     return;
   }
 
-   if ((!req.body.name) && (!req.body.UsersId)){
+   if ((!req.body.name) && (!req.body.UserId)){
     res.status(400).send({
-      message: " a new name or UsersId is required!",
+      message: " a new name or UserId is required!",
     });
     return;
   }
    
   const id = req.params.id;
   let updatedDeck = {};
-  if (req.body.name) updatedDeck = { ...updatedDeck, "name": req.body.name };
-  if (req.body.UsersId) updatedDeck = { ...updatedDeck, "usersId": req.body.UsersId };
+  if (req.body.name) updatedDeck = { "name": req.body.name };
+  if (req.body.UserId) updatedDeck = { "userId": req.body.UserId };
   
 
   try {
