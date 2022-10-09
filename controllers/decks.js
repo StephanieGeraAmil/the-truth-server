@@ -153,10 +153,8 @@ exports.get_cards_of_deck = async (req, res) => {
   try {
     const id = req.params.id;
     const deck = await Deck.findByPk(id);
-    const card = await deck.getCards();
-    res.send({
-      message: card,
-    });
+    const cards= await deck.getCards();
+    res.send(cards);
   } catch (err) {
     res.status(500).send({
       message:
@@ -177,9 +175,7 @@ exports.add_card_deck = async (req, res) => {
 
     const deck = await Deck.findByPk(id);
     const data = await deck.addCards(req.body.card);
-    res.send({
-      message: data,
-    });
+    res.send(data);
   } catch (err) {
     res.status(500).send({
       message:
@@ -199,9 +195,7 @@ exports.delete_card_deck = async (req, res) => {
 
     const deck = await Deck.findByPk(id);
     const data = await deck.removeCards(req.body.card);
-    res.send({
-      message: data,
-    });
+    res.send(data);
   } catch (err) {
     res.status(500).send({
       message:

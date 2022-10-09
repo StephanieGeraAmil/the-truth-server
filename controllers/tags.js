@@ -135,10 +135,8 @@ exports.get_verses_of_tag = async (req, res) => {
   try {
     const id = req.params.id;
     const tag = await Tag.findByPk(id);
-    const verse = await tag.getVerses();
-    res.send({
-      message: verse,
-    });
+    const verses = await tag.getVerses();
+    res.send(verses);
   } catch (err) {
     res.status(500).send({
       message:
@@ -158,9 +156,7 @@ exports.add_tag_verse = async (req, res) => {
 
     const tag = await Tag.findByPk(id);
     const data = await tag.addVerse(req.body.verse);
-    res.send({
-      message: data,
-    });
+    res.send(data);
   } catch (err) {
     res.status(500).send({
       message:
@@ -180,9 +176,7 @@ try {
 
     const tag = await Tag.findByPk(id);
     const data = await tag.removeVerse(req.body.verse);
-    res.send({
-      message: data,
-    });
+    res.send(data);
   } catch (err) {
     res.status(500).send({
       message:

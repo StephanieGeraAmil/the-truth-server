@@ -169,9 +169,7 @@ exports.add_card_verse = async (req, res) => {
 
     const card = await Card.findByPk(id);
     const data = await card.addVerse(req.body.verse);
-    res.send({
-      message: data,
-    });
+    res.send( data);
   } catch (err) {
     res.status(500).send({
       message:
@@ -191,9 +189,7 @@ exports.delete_card_verse = async (req, res) => {
 
     const card = await Card.findByPk(id);
     const data = await card.removeVerse(req.body.verse);
-    res.send({
-      message: data,
-    });
+    res.send(data);
   } catch (err) {
     res.status(500).send({
       message:

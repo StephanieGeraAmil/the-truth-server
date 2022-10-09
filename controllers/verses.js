@@ -162,10 +162,8 @@ exports.get_tags_of_verse = async (req, res) => {
   try {
     const id = req.params.id;
     const verse = await Verse.findByPk(id);
-    const tag = await verse.getTags();
-    res.send({
-      message: tag,
-    });
+    const tags = await verse.getTags();
+    res.send(tags);
   } catch (err) {
     res.status(500).send({
       message:
