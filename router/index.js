@@ -41,12 +41,13 @@ router.patch('/cards/:id', cardsController.update);
 router.delete('/cards/:id',cardsController.delete);
 
 router.get('/users', usersController.findAll);
-router.get('/users/:id', usersController.findById);
+router.get('/users/:param', usersController.findByParameter);
+//router.get('/users/:email', usersController.findByEmail);
 router.post('/users', usersController.create);
 router.patch('/users/:id', usersController.update);
 router.delete('/users/:id',usersController.delete);
 
-
+//export const fetchUserByEmail=(user)=>axios.get(`${users_url}/${user.email}`, user);
 
 // /* Asociations Routes */
 router.get('/verse_tag/:id', tagsController.get_verses_of_tag);
