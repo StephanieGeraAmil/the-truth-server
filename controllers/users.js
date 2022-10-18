@@ -5,29 +5,6 @@ const User = db.User;
 const Deck = db.Deck;
 
 const Op = db.sequelize.Op;
-// Create and Save a new User
-
-// const createUser = async (name, email, res) => {
-//   // Create a User
-//   const usr = {
-//     name: name,
-//     email: email,
-//     id: uuidv4(),
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//   };
-
-//   // Save User in the database
-//   User.create(usr)
-//     .then((data) => {
-//       res.status(200).send(data);
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: err.message || "Some error occurred while creating the User.",
-//       });
-//     });
-// };
 
 exports.create = async (req, res) => {
   // Validate request
@@ -86,79 +63,6 @@ exports.findAll = async (req, res) => {
   }
 };
 
-// Find a single User with an id or an user based on the email if the body isnt empty and if it doesnt exist it will be created and retreived
-// exports.findByParameter = async (req, res) => {
-//   try {
-//     console.log(req.body);
-//     if (!req.body) {
-//       //if no body param is id
-//       console.log("no body");
-
-//       const param = req.params.param;
-//       const data = await User.findByPk(param);
-
-//       if (data) {
-//         res.send(data);
-//       } else {
-//         res.status(404).send({
-//           message: `Can't find User with id=${param}.`,
-//         });
-//       }
-//     } else {
-//       //if body param is email
-//       if (!req.body.name || !req.body.email) {
-//         console.log("body incomplete");
-//            console.log(req.body);
-//         res.status(400).send({
-//           message: " a name and email is required",
-//         });
-//         return;
-//       } else {
-//         console.log("searching");
-//         //const email = req.params;
-//         let data = await User.findAll({
-//           where: {
-//             email: req.params.param,
-//           },
-//         });
-//         console.log(data[0].dataValues);
-//         if (data[0].dataValues) {
-//           console.log("not found");
-//           //there is no user with that email, so I create it
-//           // data = await createUser(req.body.name, req.body.email,res);
-//           // Create a User
-//           const usr = {
-//             name: req.body.name,
-//             email: req.body.email,
-//             id: uuidv4(),
-//             createdAt: new Date(),
-//             updatedAt: new Date(),
-//           };
-
-//           // Save User in the database
-//           // User.create(usr)
-//           //   .then((data) => {
-//           //     res.send(data);
-//           //   })
-//           //   .catch((err) => {
-//           //     res.status(500).send({
-//           //       message:
-//           //         err.message || "Some error occurred while creating the User.",
-//           //     });
-//           //   });
-//         } else {
-//           console.log("found");
-//           //i retreive the user
-//           res.status(200).send(data);
-//         }
-//       }
-//     }
-//   } catch (err) {
-//     res.status(500).send({
-//       message: err,
-//     });
-//   }
-// };
 exports.findByParameter = async (req, res) => {
   try {
     console.log(req.params.param.indexOf("@")!==-1);
@@ -166,7 +70,6 @@ exports.findByParameter = async (req, res) => {
     if(req.params.param.indexOf("@")!==-1)type="email";
 let email="";
     let data="";
-   //let param=""
     if(type==="email"){
       email = req.params.param;
       console.log(email)
@@ -176,27 +79,13 @@ let email="";
           },
         });
         if(result)data=result[0];
-
     }
-    // let id=""
     if (type==="id"){
       id=req.params.param;
-      // console.log(id);
       data= await User.findByPk(id);
     }
-      // console.log(data);
-    
-    
-  
-
-    // if (data!={}) {
       res.send(data);
-    // } else {
-    //     res.send({});
-      // res.status(404).send({
-      //   message: `Can't find User.`,
-      // });
-    // }
+
   } catch (err) {
     res.status(500).send({
       message: err,
