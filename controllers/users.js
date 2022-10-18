@@ -165,7 +165,7 @@ exports.findByParameter = async (req, res) => {
     let type="id";
     if(req.params.param.indexOf("@")!==-1)type="email";
 let email="";
-    let data={};
+    let data="";
    //let param=""
     if(type==="email"){
       email = req.params.param;
@@ -189,14 +189,14 @@ let email="";
     
   
 
-    if (data) {
+    // if (data!={}) {
       res.send(data);
-    } else {
-        res.send([]);
+    // } else {
+    //     res.send({});
       // res.status(404).send({
       //   message: `Can't find User.`,
       // });
-    }
+    // }
   } catch (err) {
     res.status(500).send({
       message: err,
