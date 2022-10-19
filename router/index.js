@@ -50,6 +50,7 @@ router.delete('/users/:id',usersController.delete);
 //export const fetchUserByEmail=(user)=>axios.get(`${users_url}/${user.email}`, user);
 
 // /* Asociations Routes */
+router.get('/deck_user/:id', decksController.getDecksOfUser);
 router.get('/verse_tag/:id', tagsController.get_verses_of_tag);
 router.get('/tag_verse/:id', versesController.get_tags_of_verse);
 router.patch('/verse_tag/:id', tagsController.add_tag_verse);

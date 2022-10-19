@@ -63,7 +63,25 @@ exports.findAll = async (req, res) => {
     }); 
   }
 };
+exports.getDecksOfUser=async (req,res)=>{
+  const id = req.params.id;
+  console.log(id);
+  let data=''
+  try {
+        let result = await Deck.findAll({
+          where: {UserId: id},
+        });
+        if(result)data=result[0];
+   
+      res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: "Error retrieving Deck with Userid=" + id,
+      error: err
+    });
+  }
 
+}
 // Find a single Deck with an id
 exports.findById = async (req, res) => {
   const id = req.params.id;
