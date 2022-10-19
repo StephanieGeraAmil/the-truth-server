@@ -3,7 +3,7 @@ const db = require("../sequelize/models");
 const { v4: uuidv4 } = require("uuid");
 //const note = require("../sequelize/models/note");
 const Card = db.Card;
-const Deck = db.Deck;
+
 const Note = db.Note;
 const Img = db.Img;
 
@@ -170,7 +170,7 @@ exports.add_card_verse = async (req, res) => {
 
     const card = await Card.findByPk(id);
     const data = await card.addVerse(req.body.verse);
-    res.send( data);
+    res.send(data);
   } catch (err) {
     res.status(500).send({
       message:
@@ -204,7 +204,7 @@ exports.add_card_deck = async (req, res) => {
     const id = req.params.id;
     if (!req.body.card) {
       res.status(400).send({
-          message: "A card id on the body is required!",
+        message: "A card id on the body is required!",
       });
       return;
     }
@@ -229,9 +229,9 @@ exports.delete_card_deck = async (req, res) => {
       });
       return;
     }
-  const card = await Card.findByPk(req.body.card);
+    const card = await Card.findByPk(req.body.card);
     const data = await card.removeDeck(id);
-  
+
     res.send(data);
   } catch (err) {
     res.status(500).send({
