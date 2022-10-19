@@ -61,8 +61,8 @@ router.patch('/verse_card/:id', cardsController.add_card_verse);
 router.delete('/verse_card/:id', cardsController.delete_card_verse);
 
 router.get('/card_deck/:id', decksController.get_cards_of_deck);
-router.patch('/card_deck/:id', decksController.add_card_deck);
-router.delete('/card_deck/:id', decksController.delete_card_deck);
+router.post('/card_deck/:id', cardsController.add_card_deck);
+router.delete('/card_deck/:id', cardsController.delete_card_deck);
 
 
 

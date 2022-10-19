@@ -172,6 +172,7 @@ exports.get_cards_of_deck = async (req, res) => {
     const id = req.params.id;
     const deck = await Deck.findByPk(id);
     const cards= await deck.getCards();
+  
     res.send(cards);
   } catch (err) {
     res.status(500).send({
@@ -181,43 +182,4 @@ exports.get_cards_of_deck = async (req, res) => {
   }
 };
 
-exports.add_card_deck = async (req, res) => {
-  try {
-    const id = req.params.id;
-    if (!req.body.card) {
-      res.status(400).send({
-        message: "A card is required!",
-      });
-      return;
-    }
 
-    const deck = await Deck.findByPk(id);
-    const data = await deck.addCards(req.body.card);
-    res.send(data);
-  } catch (err) {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving cards of decks.",
-    });
-  }
-};
-exports.delete_card_deck = async (req, res) => {
-  try {
-    const id = req.params.id;
-    if (!req.body.card) {
-      res.status(400).send({
-        message: "A card is required!",
-      });
-      return;
-    }
-
-    const deck = await Deck.findByPk(id);
-    const data = await deck.removeCards(req.body.card);
-    res.send(data);
-  } catch (err) {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving cards of decks.",
-    });
-  }
-};

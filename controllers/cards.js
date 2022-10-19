@@ -3,6 +3,7 @@ const db = require("../sequelize/models");
 const { v4: uuidv4 } = require("uuid");
 //const note = require("../sequelize/models/note");
 const Card = db.Card;
+const Deck = db.Deck;
 const Note = db.Note;
 const Img = db.Img;
 
@@ -198,3 +199,44 @@ exports.delete_card_verse = async (req, res) => {
   }
 };
 
+exports.add_card_deck = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!req.body.card) {
+      res.status(400).send({
+          message: "A card id on the body is required!",
+      });
+      return;
+    }
+
+    const card = await Card.findByPk(req.body.card);
+    const data = await card.addDeck(id);
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving cards of decks.",
+    });
+  }
+};
+
+exports.delete_card_deck = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!req.body.card) {
+      res.status(400).send({
+        message: "A card id on the body is required!",
+      });
+      return;
+    }
+  const card = await Card.findByPk(req.body.card);
+    const data = await card.removeDeck(id);
+  
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving cards of decks.",
+    });
+  }
+};
