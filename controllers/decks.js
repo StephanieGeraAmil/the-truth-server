@@ -71,7 +71,7 @@ exports.getDecksOfUser=async (req,res)=>{
         let result = await Deck.findAll({
           where: {UserId: id},
         });
-        if(result)data=result[0];
+        if(result)data=result;
    
       res.send(data);
   } catch (err) {
