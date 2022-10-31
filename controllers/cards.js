@@ -241,3 +241,42 @@ exports.delete_card_deck = async (req, res) => {
     });
   }
 };
+
+// add_card_note
+
+exports.add_card_note = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!req.body.content) {
+      res.status(400).send({
+        message: "A  note content on the body is required!",
+      });
+      return;
+    }
+   
+   
+    let noteToCreate={
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    content:req.body.content,
+  };
+///create note
+  const noteToAdd= await Note.create(noteToCreate)
+
+//add foreign key to card
+ const updatedCard = {NoteId: noteToAdd.dataValues.id};
+    const card = await Card.update(updatedCard,{ where: { id: id } });
+console.log(card)
+    res.send(noteToAdd);
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving cards of decks.",
+    });
+  }
+};
+
+exports.get_cards_of_note = async (req, res) => {}
+exports.delete_card_note = async (req, res) => {}

@@ -64,6 +64,10 @@ router.get('/card_deck/:id', decksController.get_cards_of_deck);
 router.post('/card_deck/:id', cardsController.add_card_deck);
 router.delete('/card_deck/:id', cardsController.delete_card_deck);
 
+router.get('/card_note/:id', cardsController.get_cards_of_note);
+router.post('/card_note/:id', cardsController.add_card_note);
+router.delete('/card_note/:id', cardsController.delete_card_note);
+
 
 
 
