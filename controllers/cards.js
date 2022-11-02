@@ -1,10 +1,10 @@
 const e = require("express");
 const db = require("../sequelize/models");
 const { v4: uuidv4 } = require("uuid");
-//const note = require("../sequelize/models/note");
 const Card = db.Card;
 
 const Note = db.Note;
+const Verse = db.Verse;
 const Img = db.Img;
 
 const Op = db.sequelize.Op;
@@ -161,23 +161,50 @@ exports.get_verses_of_card = async (req, res) => {
 exports.add_card_verse = async (req, res) => {
   try {
     const id = req.params.id;
-    if (!req.body.verse) {
+    const verseToAdd = req.body;
+
+    if (
+      !verseToAdd.book ||
+      !verseToAdd.chapter ||
+      !verseToAdd.verse_number ||
+      !verseToAdd.version ||
+      !verseToAdd.scripture
+    ) {
       res.status(400).send({
-        message: "A verse is required!",
+        message: "A verse  book, chapter, number and version is required!",
       });
       return;
     }
 
     const card = await Card.findByPk(id);
-    const data = await card.addVerse(req.body.verse);
-    res.send(data);
-  } catch (err) {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving cards of verses.",
+    const result = await Verse.findOne({
+      where: {
+        book: verseToAdd.book,
+        chapter: verseToAdd.chapter,
+        verse_number: verseToAdd.verse_number,
+        version: verseToAdd.version,
+      },
     });
+
+    console.log(result);
+    let verse = result;
+    const vTAdd = {
+      ...verseToAdd,
+      id: uuidv4(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    if (verse == null) {
+      verse = await Verse.create(vTAdd);
+    }
+
+    await card.addVerse(verse);
+    res.send(verse);
+  } catch (err) {
+    res.status(500).send(err.message);
   }
 };
+
 exports.delete_card_verse = async (req, res) => {
   try {
     const id = req.params.id;
@@ -254,21 +281,20 @@ exports.add_card_note = async (req, res) => {
       });
       return;
     }
-   
-   
-    let noteToCreate={
-    id: uuidv4(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    content:req.body.content,
-  };
-///create note
-  const noteToAdd= await Note.create(noteToCreate)
 
-//add foreign key to card
- const updatedCard = {NoteId: noteToAdd.dataValues.id};
-    const card = await Card.update(updatedCard,{ where: { id: id } });
-console.log(card)
+    let noteToCreate = {
+      id: uuidv4(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      content: req.body.content,
+    };
+    ///create note
+    const noteToAdd = await Note.create(noteToCreate);
+
+    //add foreign key to card
+    const updatedCard = { NoteId: noteToAdd.dataValues.id };
+    const card = await Card.update(updatedCard, { where: { id: id } });
+    console.log(card);
     res.send(noteToAdd);
   } catch (err) {
     res.status(500).send({
@@ -278,5 +304,5 @@ console.log(card)
   }
 };
 
-exports.get_cards_of_note = async (req, res) => {}
-exports.delete_card_note = async (req, res) => {}
+exports.get_cards_of_note = async (req, res) => {};
+exports.delete_card_note = async (req, res) => {};
