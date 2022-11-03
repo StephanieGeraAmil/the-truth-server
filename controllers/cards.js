@@ -146,15 +146,28 @@ exports.delete = async (req, res) => {
 exports.get_verses_of_card = async (req, res) => {
   try {
     const id = req.params.id;
-    const card = await Card.findByPk(id);
-    const verse = await card.getVerses();
-    res.send({
-      message: verse,
-    });
+   // const card = await Card.findByPk(id,{ include: {model: Verse} });
+const card = await Card.findByPk(id);
+
+const verses = await card.getVerses();
+    res.send(verses);
   } catch (err) {
     res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving verses of cards.",
+      message: err,
+    });
+  }
+};
+exports.get_complete_card = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const card = await Card.findByPk(id,{ include: [{model: Verse},{model: Note}] });
+// const card = await Card.findByPk(id);
+
+// const verses = await card.getVerse();
+    res.send(card);
+  } catch (err) {
+    res.status(500).send({
+      message: err,
     });
   }
 };
@@ -304,5 +317,20 @@ exports.add_card_note = async (req, res) => {
   }
 };
 
-exports.get_cards_of_note = async (req, res) => {};
+exports.get_notes_of_cards = async (req, res) => {
+  try {
+
+
+      const id = req.params.id;
+        // const card = await Card.findByPk(id,{ include: {model: Note} });
+   const card = await Card.findByPk(id);
+   const notes = await card.getNote();
+      res.send( notes);
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving verses of cards.",
+    });
+  }
+};
 exports.delete_card_note = async (req, res) => {};

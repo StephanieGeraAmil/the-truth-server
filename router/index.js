@@ -35,7 +35,7 @@ router.patch('/decks/:id', decksController.update);
 router.delete('/decks/:id',decksController.delete);
 
 router.get('/cards', cardsController.findAll);
-router.get('/cards/:id', cardsController.findById);
+router.get('/cards/:id', cardsController.get_complete_card );
 router.post('/cards', cardsController.create);
 router.patch('/cards/:id', cardsController.update);
 router.delete('/cards/:id',cardsController.delete);
@@ -64,7 +64,7 @@ router.get('/card_deck/:id', decksController.get_cards_of_deck);
 router.post('/card_deck/:id', cardsController.add_card_deck);
 router.delete('/card_deck/:id', cardsController.delete_card_deck);
 
-router.get('/card_note/:id', cardsController.get_cards_of_note);
+router.get('/card_note/:id', cardsController.get_notes_of_cards);
 router.post('/card_note/:id', cardsController.add_card_note);
 router.delete('/card_note/:id', cardsController.delete_card_note);
 

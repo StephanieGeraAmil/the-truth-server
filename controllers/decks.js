@@ -3,6 +3,7 @@ const db = require("../sequelize/models");
 const { v4: uuidv4 } = require("uuid");
 const User = db.User;
 const Deck = db.Deck;
+const Note = db.Note;
 
 const Op = db.sequelize.Op;
 // Create and Save a new Deck
