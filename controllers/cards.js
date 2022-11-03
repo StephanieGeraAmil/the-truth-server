@@ -146,10 +146,10 @@ exports.delete = async (req, res) => {
 exports.get_verses_of_card = async (req, res) => {
   try {
     const id = req.params.id;
-   // const card = await Card.findByPk(id,{ include: {model: Verse} });
-const card = await Card.findByPk(id);
+    // const card = await Card.findByPk(id,{ include: {model: Verse} });
+    const card = await Card.findByPk(id);
 
-const verses = await card.getVerses();
+    const verses = await card.getVerses();
     res.send(verses);
   } catch (err) {
     res.status(500).send({
@@ -160,10 +160,12 @@ const verses = await card.getVerses();
 exports.get_complete_card = async (req, res) => {
   try {
     const id = req.params.id;
-    const card = await Card.findByPk(id,{ include: [{model: Verse},{model: Note}] });
-// const card = await Card.findByPk(id);
+    const card = await Card.findByPk(id, {
+      include: [{ model: Verse }, { model: Note }],
+    });
+    // const card = await Card.findByPk(id);
 
-// const verses = await card.getVerse();
+    // const verses = await card.getVerse();
     res.send(card);
   } catch (err) {
     res.status(500).send({
@@ -272,6 +274,14 @@ exports.delete_card_deck = async (req, res) => {
     }
     const card = await Card.findByPk(req.body.card);
     const data = await card.removeDeck(id);
+    const otherdeck = await card.getDecks();
+  
+    if ((otherdeck.length == 0)) {
+      console.log(
+        "********************************************************************************"
+      );
+      const num = await Card.destroy({ where: { id: card.id } });
+    }
 
     res.send(card);
   } catch (err) {
@@ -319,13 +329,11 @@ exports.add_card_note = async (req, res) => {
 
 exports.get_notes_of_cards = async (req, res) => {
   try {
-
-
-      const id = req.params.id;
-        // const card = await Card.findByPk(id,{ include: {model: Note} });
-   const card = await Card.findByPk(id);
-   const notes = await card.getNote();
-      res.send( notes);
+    const id = req.params.id;
+    // const card = await Card.findByPk(id,{ include: {model: Note} });
+    const card = await Card.findByPk(id);
+    const notes = await card.getNote();
+    res.send(notes);
   } catch (err) {
     res.status(500).send({
       message:
