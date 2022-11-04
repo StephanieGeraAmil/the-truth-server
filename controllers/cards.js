@@ -277,9 +277,7 @@ exports.delete_card_deck = async (req, res) => {
     const otherdeck = await card.getDecks();
   
     if ((otherdeck.length == 0)) {
-      console.log(
-        "********************************************************************************"
-      );
+    
       const num = await Card.destroy({ where: { id: card.id } });
     }
 
