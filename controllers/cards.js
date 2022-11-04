@@ -146,9 +146,7 @@ exports.delete = async (req, res) => {
 exports.get_verses_of_card = async (req, res) => {
   try {
     const id = req.params.id;
-    // const card = await Card.findByPk(id,{ include: {model: Verse} });
     const card = await Card.findByPk(id);
-
     const verses = await card.getVerses();
     res.send(verses);
   } catch (err) {
@@ -163,9 +161,6 @@ exports.get_complete_card = async (req, res) => {
     const card = await Card.findByPk(id, {
       include: [{ model: Verse }, { model: Note }],
     });
-    // const card = await Card.findByPk(id);
-
-    // const verses = await card.getVerse();
     res.send(card);
   } catch (err) {
     res.status(500).send({
@@ -223,7 +218,8 @@ exports.add_card_verse = async (req, res) => {
 exports.delete_card_verse = async (req, res) => {
   try {
     const id = req.params.id;
-    if (!req.body.verse) {
+
+    if (!req.body.id) {
       res.status(400).send({
         message: "A verse is required!",
       });
@@ -231,8 +227,8 @@ exports.delete_card_verse = async (req, res) => {
     }
 
     const card = await Card.findByPk(id);
-    const data = await card.removeVerse(req.body.verse);
-    res.send(data);
+    await card.removeVerse(req.body.id);
+    res.send(req.body.id);
   } catch (err) {
     res.status(500).send({
       message:
@@ -240,6 +236,7 @@ exports.delete_card_verse = async (req, res) => {
     });
   }
 };
+
 
 exports.add_card_deck = async (req, res) => {
   try {
@@ -275,9 +272,8 @@ exports.delete_card_deck = async (req, res) => {
     const card = await Card.findByPk(req.body.card);
     const data = await card.removeDeck(id);
     const otherdeck = await card.getDecks();
-  
-    if ((otherdeck.length == 0)) {
-    
+
+    if (otherdeck.length == 0) {
       const num = await Card.destroy({ where: { id: card.id } });
     }
 
@@ -289,8 +285,6 @@ exports.delete_card_deck = async (req, res) => {
     });
   }
 };
-
-// add_card_note
 
 exports.add_card_note = async (req, res) => {
   try {
@@ -339,4 +333,23 @@ exports.get_notes_of_cards = async (req, res) => {
     });
   }
 };
-exports.delete_card_note = async (req, res) => {};
+exports.delete_card_note = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!req.body.id) {
+      res.status(400).send({
+        message: "A note id on the body is required!",
+      });
+      return;
+    }
+    const card = await Card.findByPk(id);
+    await card.update({ NoteId: null });
+    const num = await Note.destroy({ where: { id: req.body.id } });
+    res.send(req.body);
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving cards of decks.",
+    });
+  }
+};
