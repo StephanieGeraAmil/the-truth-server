@@ -5,8 +5,8 @@ module.exports = (sequelize) => {
     static associate({ Deck, Verse, Note, Img }) {
      this.belongsTo(Img, { foreignKey: "ImgId"});
      this.belongsTo(Note, { foreignKey: "NoteId"});
-      this.belongsToMany(Deck, { through: "cards_decks" });
-      this.belongsToMany(Verse, { through: "cards_verses" });
+      this.belongsToMany(Deck, { through: "Cards_Decks" });
+      this.belongsToMany(Verse, { through: "Cards_Verses" });
     
     }
   }

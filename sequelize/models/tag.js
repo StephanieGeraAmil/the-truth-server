@@ -2,8 +2,9 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Tag extends Model {
-    static associate({ Verse }) {
-            this.belongsToMany(Verse, { through: "verses_tags" });
+    static associate({ Verse,Thought }) {
+            this.belongsToMany(Verse, { through: "Verses_Tags" });
+            this.belongsToMany(Thought, { through: "Thoughts_Tag" });
       
 
     }

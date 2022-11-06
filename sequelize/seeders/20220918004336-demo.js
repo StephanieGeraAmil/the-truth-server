@@ -52,31 +52,31 @@ module.exports = {
         await queryInterface.bulkInsert(
           "Decks",
           [
-            // {
-            //   id: uuidv4(),
-            //   name: "Fear",
-            //   UserId: users[0][0].id,
-            //   createdAt: new Date(),
-            //   updatedAt: new Date(),
-            // },
-            // {
-            //   id: uuidv4(),
-            //   name: "Doubt",
-            //   UserId: users[0][0].id,
-            //   createdAt: new Date(),
-            //   updatedAt: new Date(),
-            // },
-            // {
-            //   id: uuidv4(),
-            //   name: "Body Image",
-            //   UserId: users[0][1].id,
-            //   createdAt: new Date(),
-            //   updatedAt: new Date(),
-            // },
+            {
+              id: uuidv4(),
+              name: "Fear",
+              UserId: users[0][0].id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              id: uuidv4(),
+              name: "Doubt",
+              UserId: users[0][0].id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              id: uuidv4(),
+              name: "Body Image",
+              UserId: users[0][2].id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
             {
               id: uuidv4(),
               name: "Laziness",
-              UserId: users[0][0].id,
+              UserId: users[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
@@ -462,33 +462,97 @@ module.exports = {
           { transaction: t }
         );
         ////////////////////////////////
-        ///verses_tags
+        ///thoughts
+        await queryInterface.bulkInsert(
+          "Thoughts",
+          [
+            {
+              id: uuidv4(),
+              phrase: "Why can't I finish anything?",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              id: uuidv4(),
+              phrase: "lack of concentration",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              id: uuidv4(),
+              phrase: "loosing time",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+          { transaction: t }
+        );
+        ////////////////////////////////
+        ///thoughts_tags
 
         const tags = await queryInterface.sequelize.query(
           `SELECT id from "Tags";`,
           { transaction: t }
         );
+        const thoughts = await queryInterface.sequelize.query(
+          `SELECT id from "Thoughts";`,
+          { transaction: t }
+        );
         await queryInterface.bulkInsert(
-          "verses_tags",
+          "Thoughts_Tags",
+          [
+            {
+              ThoughtId: verses[0][0].id,
+              TagId: tags[0][0].id,
+              related: 5,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              ThoughtId: verses[0][1].id,
+              TagId: tags[0][0].id,
+              related: 4,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              ThoughtId: verses[0][2].id,
+              TagId: tags[0][0].id,
+              related: 3,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+          { transaction: t }
+        );
+        ////////////////////////////////
+        ///verses_tags
+
+        // const tags = await queryInterface.sequelize.query(
+        //   `SELECT id from "Tags";`,
+        //   { transaction: t }
+        // );
+        await queryInterface.bulkInsert(
+          "Verses_Tags",
           [
             {
               VerseId: verses[0][0].id,
               TagId: tags[0][0].id,
-
+              relevance: 4,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
               VerseId: verses[0][1].id,
               TagId: tags[0][0].id,
-
+              relevance: 4,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
               VerseId: verses[0][2].id,
               TagId: tags[0][0].id,
-
+              relevance: 3,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
@@ -506,25 +570,28 @@ module.exports = {
           { transaction: t }
         );
         await queryInterface.bulkInsert(
-          "cards_decks",
+          "Cards_Decks",
           [
             {
               CardId: cards[0][0].id,
               DeckId: decks[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
+                 order: 3,
             },
             {
               CardId: cards[0][1].id,
               DeckId: decks[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
+                  order: 2,
             },
             {
               CardId: cards[0][2].id,
               DeckId: decks[0][0].id,
               createdAt: new Date(),
               updatedAt: new Date(),
+                  order: 1,
             },
 
             {
@@ -532,12 +599,14 @@ module.exports = {
               DeckId: decks[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
+                 order: 1,
             },
             {
               CardId: cards[0][3].id,
               DeckId: decks[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
+                 order: 2,
             },
           ],
           { transaction: t }
@@ -545,7 +614,7 @@ module.exports = {
         ////////////////////////////////
         ///cards_verses
         await queryInterface.bulkInsert(
-          "cards_verses",
+          "Cards_Verses",
           [
             {
               CardId: cards[0][0].id,
@@ -592,15 +661,17 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     try {
-      await queryInterface.bulkDelete("cards_decks", null, {});
-      await queryInterface.bulkDelete("verses_tags", null, {});
-      await queryInterface.dropTable("cards_verses");
+      await queryInterface.bulkDelete("Cards_Decks", null, {});
+      await queryInterface.bulkDelete("Verses_Tags", null, {});
+      await queryInterface.bulkDelete("Cards_Verses", null, {});
+      await queryInterface.bulkDelete("Thoughts_Tags", null, {});
       await queryInterface.bulkDelete("Decks", null, {});
       await queryInterface.bulkDelete("Users", null, {});
       await queryInterface.bulkDelete("Notes", null, {});
       await queryInterface.bulkDelete("Tags", null, {});
       await queryInterface.bulkDelete("Verses", null, {});
       await queryInterface.bulkDelete("Cards", null, {});
+      await queryInterface.bulkDelete("Thoughts", null, {});
     } catch (e) {
       console.log(e);
     }

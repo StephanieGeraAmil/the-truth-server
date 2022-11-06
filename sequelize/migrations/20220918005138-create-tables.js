@@ -212,7 +212,7 @@ module.exports = {
                   tableName: "Notes",
                 },
                 key: "id",
-              }, 
+              },
             },
             ImgId: {
               allowNull: true,
@@ -239,9 +239,37 @@ module.exports = {
           },
           { transaction: t }
         );
+         /////////////////////////////////////////////////////////////////////////
+        await queryInterface.createTable(
+          "Thoughts",
+          {
+       
+           id: {
+              type: DataTypes.UUID,
+              primaryKey: true,
+            },
+           
+            createdAt: {
+              allowNull: false,
+              type: DataTypes.DATE,
+              defaultValue: DataTypes.NOW,
+            },
+            updatedAt: {
+              allowNull: false,
+              type: DataTypes.DATE,
+              defaultValue: DataTypes.NOW,
+            },
+            phrase: {
+            type: DataTypes.STRING,
+             allowNull: false,
+              
+            },
+          },
+          { transaction: t }
+        );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "cards_verses",
+          "Cards_Verses",
           {
             CardId: {
               type: DataTypes.UUID,
@@ -266,7 +294,7 @@ module.exports = {
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "verses_tags",
+          "Verses_Tags",
           {
             VerseId: {
               type: DataTypes.UUID,
@@ -286,16 +314,17 @@ module.exports = {
               type: DataTypes.DATE,
               defaultValue: DataTypes.NOW,
             },
+            relevance: {
+              type: DataTypes.DECIMAL,
+              defaultValue: 0,
+            },
           },
           { transaction: t }
         );
         /////////////////////////////////////////////////////////////////////////
         await queryInterface.createTable(
-          "cards_decks",
+          "Cards_Decks",
           {
-            order: {
-              type: DataTypes.DECIMAL,
-            },
             CardId: {
               type: DataTypes.UUID,
               primaryKey: true,
@@ -314,6 +343,40 @@ module.exports = {
               type: DataTypes.DATE,
               defaultValue: DataTypes.NOW,
             },
+            order: {
+              type: DataTypes.DECIMAL,
+              defaultValue: 0,
+            },
+          },
+          { transaction: t }
+        );
+         /////////////////////////////////////////////////////////////////////////
+        await queryInterface.createTable(
+          "Thoughts_Tags",
+          {
+        
+            TagId: {
+              type: DataTypes.UUID,
+              primaryKey: true,
+            },
+            ThoughtId: {
+              type: DataTypes.UUID,
+              primaryKey: true,
+            },
+            createdAt: {
+              allowNull: false,
+              type: DataTypes.DATE,
+              defaultValue: DataTypes.NOW,
+            },
+            updatedAt: {
+              allowNull: false,
+              type: DataTypes.DATE,
+              defaultValue: DataTypes.NOW,
+            },
+            related: {
+              type: DataTypes.DECIMAL,
+              defaultValue: 0,
+            },
           },
           { transaction: t }
         );
@@ -324,9 +387,11 @@ module.exports = {
   },
   async down(queryInterface, DataTypes) {
     try {
-      await queryInterface.dropTable("verses_tags");
-      await queryInterface.dropTable("cards_decks");
-      await queryInterface.dropTable("cards_verses");
+      await queryInterface.dropTable("Verses_Tags");
+      await queryInterface.dropTable("Cards_Decks");
+      await queryInterface.dropTable("Cards_Verses");
+      await queryInterface.dropTable("Thoughts_Tags");
+      await queryInterface.dropTable("Thoughts");
       await queryInterface.dropTable("Decks");
       await queryInterface.dropTable("Users");
       await queryInterface.dropTable("Imgs");

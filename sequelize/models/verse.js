@@ -3,8 +3,8 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Verse extends Model {
     static associate({ Tag, Card }) {
-      this.belongsToMany(Card, { through: "cards_verses" });
-      this.belongsToMany(Tag, { through: "verses_tags" });
+      this.belongsToMany(Card, { through: "Cards_Verses" });
+      this.belongsToMany(Tag, { through: "Verses_Tags" });
     }
   }
   Verse.init(

@@ -196,7 +196,7 @@ exports.add_card_verse = async (req, res) => {
       },
     });
 
-    console.log(result);
+
     let verse = result;
     const vTAdd = {
       ...verseToAdd,
