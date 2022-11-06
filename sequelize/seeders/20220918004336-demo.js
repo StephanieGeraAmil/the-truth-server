@@ -80,13 +80,7 @@ module.exports = {
               createdAt: new Date(),
               updatedAt: new Date(),
             },
-            {
-              id: uuidv4(),
-              name: "Favorites",
-              UserId: users[0][0].id,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-            },
+   
             {
               id: uuidv4(),
               name: "Will Power",
@@ -386,17 +380,26 @@ module.exports = {
             },
             {
               id: uuidv4(),
+               NoteId: notes[0][5].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
               id: uuidv4(),
-
-              NoteId: notes[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
             {
+              id: uuidv4(),
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+               {
+              id: uuidv4(),
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+               {
               id: uuidv4(),
               createdAt: new Date(),
               updatedAt: new Date(),
@@ -574,39 +577,46 @@ module.exports = {
           [
             {
               CardId: cards[0][0].id,
-              DeckId: decks[0][0].id,
+              DeckId: decks[0][3].id,
               createdAt: new Date(),
               updatedAt: new Date(),
                  order: 3,
             },
             {
               CardId: cards[0][1].id,
-              DeckId: decks[0][0].id,
+              DeckId: decks[0][3].id,
               createdAt: new Date(),
               updatedAt: new Date(),
                   order: 2,
             },
             {
               CardId: cards[0][2].id,
-              DeckId: decks[0][0].id,
+              DeckId: decks[0][3].id,
               createdAt: new Date(),
               updatedAt: new Date(),
                   order: 1,
             },
 
             {
-              CardId: cards[0][2].id,
-              DeckId: decks[0][1].id,
+              CardId: cards[0][3].id,
+              DeckId: decks[0][3].id,
               createdAt: new Date(),
               updatedAt: new Date(),
-                 order: 1,
+                 order: 4,
             },
             {
-              CardId: cards[0][3].id,
-              DeckId: decks[0][1].id,
+              CardId: cards[0][4].id,
+              DeckId: decks[0][3].id,
               createdAt: new Date(),
               updatedAt: new Date(),
-                 order: 2,
+                 order: 5,
+            },
+             {
+              CardId: cards[0][5].id,
+              DeckId: decks[0][3].id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+                 order: 6,
             },
           ],
           { transaction: t }
@@ -617,27 +627,8 @@ module.exports = {
           "Cards_Verses",
           [
             {
-              CardId: cards[0][0].id,
-              VerseId: verses[0][0].id,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-            },
-            {
-              CardId: cards[0][1].id,
-              VerseId: verses[0][0].id,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-            },
-            {
               CardId: cards[0][2].id,
               VerseId: verses[0][0].id,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-            },
-
-            {
-              CardId: cards[0][2].id,
-              VerseId: verses[0][1].id,
               createdAt: new Date(),
               updatedAt: new Date(),
             },
@@ -647,6 +638,25 @@ module.exports = {
               createdAt: new Date(),
               updatedAt: new Date(),
             },
+            {
+              CardId: cards[0][4].id,
+              VerseId: verses[0][4].id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+
+            {
+              CardId: cards[0][5].id,
+              VerseId: verses[0][8].id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            // {
+            //   CardId: cards[0][3].id,
+            //   VerseId: verses[0][2].id,
+            //   createdAt: new Date(),
+            //   updatedAt: new Date(),
+            // },
           ],
           { transaction: t }
         );
