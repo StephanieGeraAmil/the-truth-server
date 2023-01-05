@@ -36,8 +36,15 @@ ENV PATH /root/.volta/bin:$PATH
 # RUN npx sequelize-cli db:create 
 # RUN npx sequelize-cli db:migrate
 # RUN npx sequelize-cli db:seed:all
-# [deploy]
-#   release_command = "npx sequelize-cli db:create"
+
 CMD [ "npm", "run", "start" ]
 
+# [deploy]
+# release_command = "bash -c sequelize db:migrate && sequelize db:seed:all"
 
+# FROM node:latest
+# WORKDIR /app
+# COPY . .
+# CMD ["npm", "install"]
+# CMD ["npm", "install","sequelize-cli"]
+# CMD ["npm", "start"]

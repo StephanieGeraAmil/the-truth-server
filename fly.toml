@@ -5,13 +5,8 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+
 [env]
-  PORT = "5500"
-  DATABASE_ENVIRONMENT = "production"
-  DB_DIALECT= "postgres"
-  DB_HOST = "<DB_HOST>"
-   DB_PASSWORD = "<SU_PASSWORD>"
-  DB_DATABASE= "he-truth"
 
 
 

@@ -1,22 +1,19 @@
 const Sequelize = require("sequelize");
 
-const getMigrations = async (db) => {
-  const migrations = await db.query("SELECT * FROM `SequelizeMeta`");
-  return migrations;
-};
-const aplyMigrations = async (migrations) => {
-  await migrations.map((migration) =>
-    migration.up(db.queryInterface, Sequelize)
-  );
-};
-
 const migrate = async () => {
-  const db = new Sequelize({
-    db_url: DATABASE_URL,
-    dialect: "postgres",
-  });
+  try {
+    const db = new Sequelize({
+      db_url: process.env.DATABASE_URL,
+      dialect: "postgres",
 
-  const migrations = await getMigrations(db);
-  await aplyMigrations(migrations);
+    });
+    const migrations = await db.query("SELECT * FROM `SequelizeMeta`");
+     console.log(migrations);
+    await migrations.map((migration) =>
+      migration.up(db.queryInterface, Sequelize)
+    );
+  } catch (e) {
+    console.log(e);
+  }
 };
 module.exports = migrate;

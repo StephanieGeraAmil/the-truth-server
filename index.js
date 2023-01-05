@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`server running on port ${port}`));
 
-const enviroment = process.env.DATABASE_ENVIRONMENT || "development";
+const enviroment = process.env.DATABASE_URL ? "production":"development";
 if (enviroment == "production") {
   migrate();
 }
